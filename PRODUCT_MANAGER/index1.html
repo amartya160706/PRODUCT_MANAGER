@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Management</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            padding: 20px;
+        }
+        form {
+            background: white;
+            padding: 15px;
+            margin: 10px auto;
+            width: 50%;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        input[type="text"], input[type="submit"] {
+            width: 80%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        input[type="submit"] {
+            background-color: #007BFF;
+            color: white;
+            cursor: pointer;
+            border: none;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        pre {
+            background: #fff;
+            padding: 10px;
+            width: 50%;
+            margin: 10px auto;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            text-align: left;
+            overflow-x: auto;
+            font-size: 14px;
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <h2>Product Management</h2>
+
+    <p>Add Product</p>
+    <form action="/add" method="post">
+        <input type="text" name="PID" placeholder="Enter Product ID">
+        <input type="text" name="name" placeholder="Enter Product Name">
+        <input type="text" name="product_pic" placeholder="Enter Product Pic URL">
+        <input type="text" name="product_type" placeholder="Enter Product Type (Type1/Type2/Type3)">
+        <input type="text" name="manufacturing_year" placeholder="Enter Manufacturing Year (Year1-Year5)">
+        <input type="submit" value="Submit">
+    </form>
+
+    <p>Update Product</p>
+    <form action="/update" method="post">
+        <input type="text" name="PID" placeholder="Enter Product ID to Update">
+        <input type="text" name="name" placeholder="Enter New Name">
+        <input type="text" name="product_pic" placeholder="Enter New Pic URL">
+        <input type="text" name="product_type" placeholder="Enter New Type">
+        <input type="text" name="manufacturing_year" placeholder="Enter New Year">
+        <input type="submit" value="Update">
+    </form>
+
+    <p>Delete Product</p>
+    <form action="/delete" method="post">
+        <input type="text" name="PID" placeholder="Enter Product ID to Delete">
+        <input type="submit" value="Delete">
+    </form>
+
+    <p>Show Products</p>
+    <pre id="json"></pre>
+    
+    <script>
+        $(document).ready(function() {
+            $.get("/show", function(data) {
+                if (data.length === 0) {
+                    $("#json").html("No products found.");
+                    return;
+                }
+                const formattedData = data.map(item => 
+                    `${item.PID} - ${item.name} - ${item.product_type} - ${item.manufacturing_year}`
+                ).join("<br>");
+                $("#json").html(formattedData);
+            }).fail(function(err) {
+                $("#json").html("Error fetching products");
+                console.error("Error:", err);
+            });
+        });
+    </script>
+</body>
+</html>

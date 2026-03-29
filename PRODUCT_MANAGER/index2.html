@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paragraph Counter & FadeOut</title>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+        p {
+            background: #007bff;
+            color: white;
+            padding: 10px;
+            margin: 5px auto;
+            width: 50%;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        p:hover {
+            background: #0056b3;
+        }
+        #count {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Click a paragraph to fade it out</h2>
+    <p>Paragraph 1</p>
+    <p>Paragraph 2</p>
+    <p>Paragraph 3</p>
+    <p>Paragraph 4</p>
+    
+    <p id="count">Total paragraphs: <span id="paraCount"></span></p>
+
+    <script>
+        $(document).ready(function() {
+
+            var count = 4;
+            $("p").click(function() {
+                $(this).fadeOut();
+                count-=1;
+                if(count == 0){
+                    alert("all discount is used");
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
